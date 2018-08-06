@@ -5,12 +5,14 @@ This repo is demo of running [simple hello-world nodejs app](https://kubernetes.
 
 ## Installation steps Linux Mint(Ubuntu/Debian)
 
-- install virtualBox:
+- install VirtualBox:
   - [download proper Linux image](https://www.virtualbox.org/wiki/Linux_Downloads)
   - run install package
 - install [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/#install-kubectl)
 - install minicube
 - running [minicube locally](https://kubernetes.io/docs/setup/minikube/)
+- install Helm [via script](https://docs.helm.sh/using_helm/#installing-helm)
+
 
 Minikube is a tool that makes it easy to run Kubernetes locally. Minikube runs a single-node Kubernetes cluster inside a VM on your laptop for users looking to try out Kubernetes or develop with it day-to-day.
 
@@ -67,10 +69,12 @@ Check this [cheetsheet page](https://kubernetes.io/docs/reference/kubectl/cheats
 
 ```
 
-## Minikube
+## [Minikube](https://github.com/kubernetes/minikube)
 
-Kubernetes local cluster for development.
 
+Minikube is a tool that makes it easy to run Kubernetes locally. Minikube runs a single-node Kubernetes cluster inside a VM on your laptop for users looking to try out Kubernetes or develop with it day-to-day.
+
+Basic commands
 
 ```bash
 
@@ -81,5 +85,47 @@ Kubernetes local cluster for development.
 
   # stop minikube cluster
   sudo minikube stop
+
+```
+
+## [Helm](https://github.com/helm/helm)
+
+Helm is a tool for managing Kubernetes charts. Charts are packages of pre-configured Kubernetes resources.
+
+### Instalation script
+
+```bash
+
+  # download script into current directory
+  curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get > ./get_helm.sh
+  
+  # change mode / permissions
+  chmod 700 get_helm.sh
+  
+  #run instalation script
+  ./get_helm.sh
+
+
+  # after success init helm
+  helm init
+
+```
+
+## Using HELM
+
+When you first install Helm, it is preconfigured to talk to the official Kubernetes charts repository. This repository contains a number of carefully curated and maintained charts. This chart repository is named stable by default.
+
+```bash
+  # search for helm chart in official k8 repo
+  helm search <package name>
+
+  # inspect chart (k8 specs)
+  helm inspect <chart name>
+
+
+  #install 
+  helm install <chart name>
+
+
 
 ```
