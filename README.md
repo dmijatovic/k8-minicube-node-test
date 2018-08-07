@@ -19,6 +19,22 @@ Minikube is a tool that makes it easy to run Kubernetes locally. Minikube runs a
 ```bash
 
   #1 - install virtualbox Linux Mint 18 (Ubuntu 16)
+
+
+  #1a - install KVM
+  sudo apt-get install qemu-kvm libvirt-bin virtinst bridge-utils cpu-checker 
+
+  # create user group
+  sudo newgrp libvirt
+  # assign group to yourself
+  sudo usermod -a -G libvirt $(whoami)
+
+  # download KVM2
+  curl -Lo docker-machine-driver-kvm2 https://storage.googleapis.com/minikube/releases/latest/docker-machine-driver-kvm2 \
+&& chmod +x docker-machine-driver-kvm2 \
+&& sudo cp docker-machine-driver-kvm2 /usr/local/bin/ \
+&& rm docker-machine-driver-kvm2
+
   
   #2 - install kubectl
   sudo apt-get update && sudo apt-get install -y apt-transport-https
@@ -79,9 +95,13 @@ Basic commands
 ```bash
 
   # start minicube cluster
-  # I need to use sudo with minicube
-  sudo minikube start
+  minikube start
 
+  # status report concerning minikube, k8 cluster & kubectl
+  minikube status
+
+  # check pods use kubectl
+  kubectl get pods
 
   # stop minikube cluster
   sudo minikube stop
@@ -105,23 +125,29 @@ Helm is a tool for managing Kubernetes charts. Charts are packages of pre-config
   #run instalation script
   ./get_helm.sh
 
-
   # after success init helm
   helm init
 
 ```
 
+
 ## Using HELM
 
-When you first install Helm, it is preconfigured to talk to the official Kubernetes charts repository. This repository contains a number of carefully curated and maintained charts. This chart repository is named stable by default.
+When you first install Helm, it is preconfigured to talk to the official [Kubernetes charts repo](https://github.com/helm/charts). This repository contains a number of carefully curated and maintained charts. This chart repository is named stable by default.
 
 ```bash
-  # search for helm chart in official k8 repo
-  helm search <package name>
+  # search for helm charts in official k8 repo
+  helm search <chart name>
+
+  # download chart locally
+  helm fetch <chart name>
 
   # inspect chart (k8 specs)
   helm inspect <chart name>
 
+
+  # create helm template yaml files
+  helm create <chart name>
 
   #install 
   helm install <chart name>
